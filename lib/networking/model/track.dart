@@ -1,6 +1,7 @@
+import 'package:collection/collection.dart';
 import 'package:fm_music/networking/model/image.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:collection/collection.dart';
+
 part 'track.g.dart';
 
 @JsonSerializable()
@@ -11,7 +12,8 @@ class Track {
   @JsonKey(name: 'image')
   final List<Image> images;
 
-  String get coverImage => images.firstWhereOrNull((image) => image.size == 'medium')?.url ?? "";
+  String get thumbnailImage =>
+      images.firstWhereOrNull((image) => image.size == 'small')?.url ?? "";
 
   Track({required this.name, required this.artist, required this.images});
 
