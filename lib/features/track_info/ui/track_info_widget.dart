@@ -41,7 +41,7 @@ class TrackInfoWidget extends StatelessWidget {
                             int.tryParse(trackDetails.duration))),
                     _buildAdditionInfoWidget(
                         AppLocalizations.of(context)!.listeners,
-                        FormatUtils.formatLikesAndRepliesCount(
+                        FormatUtils.formatNumber(
                             int.tryParse(trackDetails.listeners))),
                     const SizedBox(
                       height: FmDimens.enormousPadding,

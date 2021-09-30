@@ -27,9 +27,28 @@
 // 27 : Deprecated - This type of request is no longer supported
 // 29 : Rate Limit Exceded - Your IP has made too many requests in a short period, exceeding our API guidelines
 
+import 'package:fm_music/error/base_exception.dart';
 
-class APIException implements Exception {
-  final String description;
+class APIException extends BaseException {
+  String? message;
 
-  APIException(this.description);
+  APIException({int? errorCode, required this.message})
+      : super(errorCode ?? baseErrorCode);
+
+  @override
+  String getErrorMessage() {
+    //TODO implement message for every error code from above
+    switch (errorCode) {
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+      case 5:
+      case 29:
+      default:
+        message ??= 'Something went wrong, please try again later.';
+        break;
+    }
+    return message!;
+  }
 }

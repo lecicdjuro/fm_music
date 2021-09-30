@@ -9,8 +9,8 @@ import 'package:fm_music/features/tracks/bloc/tracks_bloc.dart';
 import 'package:fm_music/features/tracks/ui/search_tracks_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
   runApp(const FmMusic());
 }
 
