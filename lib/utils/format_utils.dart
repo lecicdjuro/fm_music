@@ -8,7 +8,7 @@ class FormatUtils {
       return '/';
     }
     String number = '';
-   if (value >= oneThousand) {
+    if (value >= oneThousand) {
       final int mod = value % oneThousand;
       if (mod == 0) {
         number = '${(value / oneThousand).toStringAsFixed(0)}k';
@@ -31,5 +31,13 @@ class FormatUtils {
       number = value.toString();
     }
     return number;
+  }
+
+  static String formatTrackDurationString(int? seconds) {
+    if (seconds == null) {
+      return '/';
+    }
+    Duration duration = Duration(milliseconds: seconds);
+    return "${duration.inMinutes.remainder(60)}:${(duration.inSeconds.remainder(60))}";
   }
 }

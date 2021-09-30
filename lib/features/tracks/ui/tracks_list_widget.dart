@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fm_music/features/home/ui/track_list_item_widget.dart';
-import 'package:fm_music/networking/model/track.dart';
+import 'package:fm_music/features/tracks/ui/track_list_item_widget.dart';
+import 'package:fm_music/data_provider/model/track.dart';
 
 class TracksScreenWidget extends StatelessWidget {
   const TracksScreenWidget({Key? key, required this.tracks}) : super(key: key);

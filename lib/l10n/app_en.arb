@@ -1,3 +1,13 @@
 {
-  "fmMusicApp": "FM Music App"
+  "fmMusicApp": "FM Music App",
+  "searchInputHint": "Search for music...",
+  "noRecords": "There are no records for search criteria..",
+  "searchMessage": "Search the anything you want to listen! The more you listen, the better your recommendations will get!",
+  "searchTitle": "Welcome to Last.fm",
+  "duration": "Duration: ",
+  "listeners": "Listeners: ",
+  "album": "Album: \n",
+  "playTrack": "Play track",
+  "trackInfo": "Track Details",
+  "noTrackInfo": "Sorry, but there is no track details record at this moment"
 }

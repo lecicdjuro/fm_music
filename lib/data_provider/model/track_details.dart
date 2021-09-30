@@ -1,6 +1,6 @@
-import 'package:fm_music/networking/model/artist.dart';
-import 'package:fm_music/networking/model/wiki.dart';
-import 'package:fm_music/networking/model/album.dart';
+import 'package:fm_music/data_provider/model/artist.dart';
+import 'package:fm_music/data_provider/model/wiki.dart';
+import 'package:fm_music/data_provider/model/album.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'track_details.g.dart';

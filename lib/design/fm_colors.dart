@@ -4,7 +4,7 @@ class FmColors {
   static const Color primaryDark = Color(0xFF000000);
   static const Color accent = Color(0xFF000000);
   static const Color error = Color(0xFFdc143c);
-  static const Color pendingColor = Color(0xFFC42733);
+  static const Color highlightColor = Color(0xFFC42733);
 
   static const Color surface = Color(0xFFffffff);
 

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fm_music/utils/debouncer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fm_music/design/fm_colors.dart';
-import 'package:fm_music/features/home/bloc/tracks_bloc.dart';
-import 'package:fm_music/features/home/bloc/tracks_event.dart';
-import 'package:fm_music/features/home/bloc/tracks_state.dart';
-import 'package:fm_music/features/home/ui/empty_screen_widget.dart';
-import 'package:fm_music/features/home/ui/tracks_list_widget.dart';
+import 'package:fm_music/design/fm_dimens.dart';
+import 'package:fm_music/features/common/ui/empty_screen_widget.dart';
+import 'package:fm_music/features/tracks/bloc/tracks_bloc.dart';
+import 'package:fm_music/features/tracks/bloc/tracks_event.dart';
+import 'package:fm_music/features/tracks/bloc/tracks_state.dart';
+import 'package:fm_music/features/tracks/ui/tracks_list_widget.dart';
+import 'package:fm_music/utils/debouncer.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class SearchTracksPage extends StatefulWidget {
+  const SearchTracksPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<SearchTracksPage> createState() => _SearchTracksPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _SearchTracksPageState extends State<SearchTracksPage> {
   late TextEditingController _searchTextController;
   late DebounceTimer _debounceTimer;
 
@@ -39,9 +41,11 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
             backgroundColor: FmColors.primaryDark,
             title: Container(
-              height: 40,
+              height: FmDimens.searchAppBarHeight,
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(5)),
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.circular(FmDimens.searchAppBarHeight)),
               child: Center(
                 child: TextField(
                   onChanged: (String text) => onSearchInputChanged(text),
@@ -52,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                         icon: const Icon(Icons.clear),
                         onPressed: () => onClearSearchPressed(context),
                       ),
-                      hintText: 'Search for music...',
+                      hintText: AppLocalizations.of(context)!.searchInputHint,
                       border: InputBorder.none),
                 ),
               ),
@@ -67,11 +71,12 @@ class _HomePageState extends State<HomePage> {
               } else if (state is DisplayTracksState) {
                 return Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 32),
+                        horizontal: FmDimens.largePadding,
+                        vertical: FmDimens.enormousPadding),
                     child: state.tracks.isEmpty
-                        ? const EmptyScreenWidget(
+                        ? EmptyScreenWidget(
                             description:
-                                'There are no records for search criteria')
+                                AppLocalizations.of(context)!.noRecords)
                         : TracksScreenWidget(tracks: state.tracks));
               } else {
                 return const EmptyScreenWidget();

@@ -1,3 +1,13 @@
 {
-  "fmMusicApp": "FM Muzicka Aplikacija"
+  "fmMusicApp": "FM Muzicka Aplikacija",
+  "searchInputHint": "Pronadji muziku...",
+  "noRecords": "Nema podataka za ovu pretragu...",
+  "searchMessage": "Pretrazuj muziju koju zelis da slusas! Sto vise slusas, to ces bolju preporuku za slusanje dobijati!",
+  "searchTitle": "Dobrodosao na Last.fm",
+  "duration": "Trajanje: ",
+  "listeners": "Preslusano: ",
+  "album": "Album: \n",
+  "playTrack": "Pusti pesmu",
+  "trackInfo": "Detalji pesme",
+  "noTrackInfo": "Zao nam je, ali trenutno nemamo podataka o ovoj pesmi..."
 }

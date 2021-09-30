@@ -1,9 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fm_music/data_provider/model/track.dart';
+import 'package:fm_music/data_provider/model/track_details.dart';
+import 'package:fm_music/data_provider/requests/fm_requests.dart';
 import 'package:fm_music/features/track_info/bloc/track_info_event.dart';
 import 'package:fm_music/features/track_info/bloc/track_info_state.dart';
-import 'package:fm_music/networking/model/track.dart';
-import 'package:fm_music/networking/model/track_details.dart';
-import 'package:fm_music/networking/requests/fm_requests.dart';
+
 
 class TrackInfoBloc extends Bloc<TrackInfoEvent, TrackInfoState> {
   TrackInfoBloc() : super(LoadingTrackInfoState()) {
