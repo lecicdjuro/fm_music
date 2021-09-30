@@ -1,6 +1,5 @@
-import 'package:fm_music/networking/model/image.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:collection/collection.dart';
+
 part 'artist.g.dart';
 
 @JsonSerializable()
@@ -9,7 +8,6 @@ class Artist {
   final String name;
   @JsonKey(name: 'url')
   final String url;
-
 
   Artist({required this.name, required this.url});
 

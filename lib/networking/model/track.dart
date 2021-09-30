@@ -12,6 +12,7 @@ class Track {
   @JsonKey(name: 'image')
   final List<Image> images;
 
+
   String get thumbnailImage =>
       images.firstWhereOrNull((image) => image.size == 'small')?.url ?? "";
 

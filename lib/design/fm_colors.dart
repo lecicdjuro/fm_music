@@ -8,6 +8,8 @@ class FmColors {
 
   static const Color surface = Color(0xFFffffff);
 
+  static const Color primaryButton = Color(0xFFffffff);
+
   static const Color disabled = Color(0xFF999999);
 
   static const Color primaryText = Color(0xFF000000);

@@ -32,7 +32,6 @@ class FMRequests {
       final List tracksJSON = response.data['results']['trackmatches']['track'];
       return tracksJSON.map((trackJSON) => Track.fromJson(trackJSON)).toList();
     } on DioError catch (error) {
-      print(error);
       throw APIException("$error");
     }
   }

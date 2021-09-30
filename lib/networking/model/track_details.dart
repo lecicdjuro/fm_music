@@ -12,21 +12,25 @@ class TrackDetails {
   final String listeners;
   final String playcount;
   final Artist artist;
-  final Wiki wiki;
-  final Album album;
+  final Wiki? wiki;
+  final Album? album;
+  final String duration;
 
   TrackDetails({
     required this.url,
-    required this.wiki,
-    required this.album,
     required this.listeners,
     required this.playcount,
     required this.artist,
     required this.name,
+    required this.duration,
+    this.wiki,
+    this.album
   });
 
   factory TrackDetails.fromJson(Map<String, dynamic> json) =>
       _$TrackDetailsFromJson(json);
 
   Map<String, dynamic> toJson() => _$TrackDetailsToJson(this);
+
+  bool get hasAlbumInfo => album != null;
 }

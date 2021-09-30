@@ -7,10 +7,12 @@ import 'package:fm_music/networking/requests/fm_requests.dart';
 
 class TrackInfoBloc extends Bloc<TrackInfoEvent, TrackInfoState> {
   TrackInfoBloc() : super(LoadingTrackInfoState()) {
-    on<GetTrackInfo>((event, emit) => _getTrackInfo(event.track, emit));
+    on<GetTrackInfoEvent>((event, emit) => _getTrackInfo(event.track, emit));
+    on<HandleErrorEvent>((event, emit) => _handleError(event.error, emit));
   }
 
   void _getTrackInfo(Track track, Emitter<TrackInfoState> emit) async {
+    emit(LoadingTrackInfoState());
     final TrackDetails trackDetails = await FMRequests.getTrackInfo(
         artist: track.artist, trackName: track.name);
     emit(DisplayTrackInfoState(trackDetails: trackDetails));
@@ -18,6 +20,11 @@ class TrackInfoBloc extends Bloc<TrackInfoEvent, TrackInfoState> {
 
   @override
   void onError(Object error, StackTrace stackTrace) {
+    add(HandleErrorEvent(error: error));
     super.onError(error, stackTrace);
+  }
+
+  void _handleError(error, Emitter<TrackInfoState> emit) {
+    emit(TrackInfoErrorState());
   }
 }
