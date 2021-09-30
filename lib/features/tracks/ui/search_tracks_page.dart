@@ -7,6 +7,7 @@ import 'package:fm_music/features/common/ui/empty_screen_widget.dart';
 import 'package:fm_music/features/tracks/bloc/tracks_bloc.dart';
 import 'package:fm_music/features/tracks/bloc/tracks_event.dart';
 import 'package:fm_music/features/tracks/bloc/tracks_state.dart';
+import 'package:fm_music/features/tracks/ui/keys.dart';
 import 'package:fm_music/features/tracks/ui/tracks_list_widget.dart';
 import 'package:fm_music/utils/debouncer.dart';
 
@@ -38,57 +39,73 @@ class _SearchTracksPageState extends State<SearchTracksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            backgroundColor: FmColors.primaryDark,
-            title: Container(
-              height: FmDimens.searchAppBarHeight,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius:
-                      BorderRadius.circular(FmDimens.searchAppBarHeight)),
-              child: Center(
-                child: TextField(
-                  onChanged: (String text) => onSearchInputChanged(text),
-                  controller: _searchTextController,
-                  decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search),
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () => onClearSearchPressed(context),
-                      ),
-                      hintText: AppLocalizations.of(context)!.searchInputHint,
-                      border: InputBorder.none),
-                ),
-              ),
-            )),
-        body: BlocConsumer<TracksBloc, TracksState>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              if (state is LoadingState) {
-                return const Center(
-                    child:
-                        CircularProgressIndicator(color: FmColors.primaryDark));
-              } else if (state is DisplayTracksState) {
-                return Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: FmDimens.largePadding,
-                        vertical: FmDimens.enormousPadding),
-                    child: state.tracks.isEmpty
-                        ? EmptyScreenWidget(
-                            description:
-                                AppLocalizations.of(context)!.noRecords)
-                        : TracksScreenWidget(tracks: state.tracks));
-              } else {
-                return const EmptyScreenWidget();
-              }
-            }));
+        appBar: _buildSearchAppBarWidget(context),
+        body: BlocConsumer<TracksBloc, TracksState>(listener: (context, state) {
+          if (state is TracksErrorState) {
+            _closeKeyboard();
+            state.exception.handleErrorWithSnackBar(context);
+          }
+        }, builder: (context, state) {
+          if (state is InitialState) {
+            return const EmptyScreenWidget(
+              key: Key(TracksKeys.initialScreenKey),
+            );
+          }
+          if (state is LoadingState) {
+            return const Center(
+                key: Key(TracksKeys.loadingSearchTrackScreenKey),
+                child: CircularProgressIndicator(color: FmColors.primaryDark));
+          } else if (state is DisplayTracksState) {
+            return Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: FmDimens.largePadding,
+                    vertical: FmDimens.enormousPadding),
+                child: state.tracks.isEmpty
+                    ? EmptyScreenWidget(
+                        key: const Key(TracksKeys.emptyScreenKey),
+                        description: AppLocalizations.of(context)!.noRecords)
+                    : TracksScreenWidget(tracks: state.tracks));
+          } else {
+            return const EmptyScreenWidget();
+          }
+        }));
+  }
+
+  AppBar _buildSearchAppBarWidget(BuildContext context) {
+    return AppBar(
+        key: const Key(TracksKeys.searchAppBarKey),
+        backgroundColor: FmColors.primaryDark,
+        title: Container(
+          height: FmDimens.searchAppBarHeight,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(FmDimens.searchAppBarHeight)),
+          child: Center(
+            child: TextField(
+              key: const Key(TracksKeys.searchTextInputKey),
+              onChanged: (String text) => onSearchInputChanged(text),
+              controller: _searchTextController,
+              decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.search),
+                  suffixIcon: IconButton(
+                    key: const Key(TracksKeys.clearSearchInputKey),
+                    icon: const Icon(Icons.clear),
+                    onPressed: () => onClearSearchPressed(context),
+                  ),
+                  hintText: AppLocalizations.of(context)!.searchInputHint,
+                  border: InputBorder.none),
+            ),
+          ),
+        ));
   }
 
   void onClearSearchPressed(BuildContext context) {
     _searchTextController.clear();
     onSearchInputChanged(_searchTextController.text);
-    FocusScope.of(context).unfocus();
+    _closeKeyboard();
   }
+
+  void _closeKeyboard() => FocusScope.of(context).unfocus();
 
   void onSearchInputChanged(String text) async {
     _debounceTimer.run(

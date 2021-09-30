@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fm_music/data_provider/model/track.dart';
 import 'package:fm_music/design/fm_colors.dart';
 import 'package:fm_music/design/fm_text_styles.dart';
 import 'package:fm_music/features/track_info/ui/track_info_page.dart';
-import 'package:fm_music/data_provider/model/track.dart';
 
 class TrackListItemWidget extends StatelessWidget {
   const TrackListItemWidget({Key? key, required this.track}) : super(key: key);

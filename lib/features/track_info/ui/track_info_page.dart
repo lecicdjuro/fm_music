@@ -35,21 +35,23 @@ class _TrackInfoPageState extends State<TrackInfoPage> {
                 style:
                     FmTextStyles.title(color: FmColors.primaryInvertedText))),
         body: BlocConsumer<TrackInfoBloc, TrackInfoState>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              if (state is LoadingTrackInfoState) {
-                return const Center(
-                    child:
-                        CircularProgressIndicator(color: FmColors.primaryDark));
-              } else if (state is DisplayTrackInfoState) {
-                return TrackInfoWidget(
-                  trackDetails: state.trackDetails,
-                );
-              } else {
-                return EmptyScreenWidget(
-                  description: AppLocalizations.of(context)!.noTrackInfo,
-                );
-              }
-            }));
+            listener: (context, state) {
+          if (state is TrackInfoErrorState) {
+            state.exception.handleErrorWithSnackBar(context);
+          }
+        }, builder: (context, state) {
+          if (state is LoadingTrackInfoState) {
+            return const Center(
+                child: CircularProgressIndicator(color: FmColors.primaryDark));
+          } else if (state is DisplayTrackInfoState) {
+            return TrackInfoWidget(
+              trackDetails: state.trackDetails,
+            );
+          } else {
+            return EmptyScreenWidget(
+              description: AppLocalizations.of(context)!.noTrackInfo,
+            );
+          }
+        }));
   }
 }

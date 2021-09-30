@@ -3,7 +3,7 @@ const int oneMillion = 1000000;
 
 class FormatUtils {
   ///format number over one thousand to be displayed with 'k' suffix
-  static String formatLikesAndRepliesCount(int? value) {
+  static String formatNumber(int? value) {
     if (value == null) {
       return '/';
     }

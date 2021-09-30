@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fm_music/features/tracks/bloc/tracks_event.dart';
-import 'package:fm_music/features/tracks/bloc/tracks_state.dart';
 import 'package:fm_music/data_provider/model/track.dart';
 import 'package:fm_music/data_provider/requests/fm_requests.dart';
+import 'package:fm_music/error/api_exceptions.dart';
+import 'package:fm_music/error/generic_exceptions.dart';
+import 'package:fm_music/features/tracks/bloc/tracks_event.dart';
+import 'package:fm_music/features/tracks/bloc/tracks_state.dart';
 
 class TracksBloc extends Bloc<TracksEvent, TracksState> {
   TracksBloc() : super(InitialState()) {
@@ -11,23 +15,26 @@ class TracksBloc extends Bloc<TracksEvent, TracksState> {
   }
 
   void _performSearch(String searchValue, Emitter<TracksState> emit) async {
-    if (searchValue.isEmpty) {
-      emit(InitialState());
-    } else {
-      emit(LoadingState());
-      List<Track> tracks =
-          await FMRequests.performTrackSearch(searchTerm: searchValue);
-      emit(DisplayTracksState(tracks: tracks));
+    try {
+      if (searchValue.isEmpty) {
+        emit(InitialState());
+      } else {
+        emit(LoadingState());
+        List<Track> tracks =
+            await FMRequests.performTrackSearch(searchTerm: searchValue);
+        emit(DisplayTracksState(tracks: tracks));
+      }
+    } catch (error) {
+      add(HandleErrorEvent(error: error));
     }
   }
 
-  @override
-  void onError(Object error, StackTrace stackTrace) {
-    add(HandleErrorEvent(error: error));
-    super.onError(error, stackTrace);
-  }
-
   void _handleError(error, Emitter<TracksState> emit) {
-    emit(TracksErrorState());
+    if (error is APIException) {
+      emit(TracksErrorState(error));
+    } else {
+      emit(TracksErrorState(GenericException()));
+      log(error.toString());
+    }
   }
 }
