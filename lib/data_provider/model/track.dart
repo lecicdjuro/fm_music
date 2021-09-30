@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:fm_music/networking/model/image.dart';
+import 'package:fm_music/data_provider/model/image.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'track.g.dart';
@@ -11,6 +11,7 @@ class Track {
   final String artist;
   @JsonKey(name: 'image')
   final List<Image> images;
+
 
   String get thumbnailImage =>
       images.firstWhereOrNull((image) => image.size == 'small')?.url ?? "";

@@ -1,6 +1,6 @@
-import 'package:fm_music/networking/model/artist.dart';
-import 'package:fm_music/networking/model/wiki.dart';
-import 'package:fm_music/networking/model/album.dart';
+import 'package:fm_music/data_provider/model/artist.dart';
+import 'package:fm_music/data_provider/model/wiki.dart';
+import 'package:fm_music/data_provider/model/album.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'track_details.g.dart';
@@ -12,21 +12,25 @@ class TrackDetails {
   final String listeners;
   final String playcount;
   final Artist artist;
-  final Wiki wiki;
-  final Album album;
+  final Wiki? wiki;
+  final Album? album;
+  final String duration;
 
   TrackDetails({
     required this.url,
-    required this.wiki,
-    required this.album,
     required this.listeners,
     required this.playcount,
     required this.artist,
     required this.name,
+    required this.duration,
+    this.wiki,
+    this.album
   });
 
   factory TrackDetails.fromJson(Map<String, dynamic> json) =>
       _$TrackDetailsFromJson(json);
 
   Map<String, dynamic> toJson() => _$TrackDetailsToJson(this);
+
+  bool get hasAlbumInfo => album != null;
 }

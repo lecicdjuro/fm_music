@@ -1,4 +1,4 @@
-import 'package:fm_music/networking/model/track.dart';
+import 'package:fm_music/data_provider/model/track.dart';
 
 abstract class TracksState {}
 

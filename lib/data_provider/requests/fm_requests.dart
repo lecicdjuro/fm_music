@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:fm_music/error/fm_exceptions.dart';
 import 'package:fm_music/networking/dio_client.dart';
-import 'package:fm_music/networking/model/track.dart';
-import 'package:fm_music/networking/model/track_details.dart';
+import 'package:fm_music/data_provider/model/track.dart';
+import 'package:fm_music/data_provider/model/track_details.dart';
 
 // 2 : Invalid service - This service does not exist
 // 3 : Invalid Method - No method with that name in this package
@@ -32,7 +32,6 @@ class FMRequests {
       final List tracksJSON = response.data['results']['trackmatches']['track'];
       return tracksJSON.map((trackJSON) => Track.fromJson(trackJSON)).toList();
     } on DioError catch (error) {
-      print(error);
       throw APIException("$error");
     }
   }

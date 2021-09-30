@@ -1,9 +1,15 @@
-import 'package:fm_music/networking/model/track.dart';
+import 'package:fm_music/data_provider/model/track.dart';
 
 abstract class TrackInfoEvent {}
 
-class GetTrackInfo extends TrackInfoEvent {
-  GetTrackInfo({required this.track});
+class GetTrackInfoEvent extends TrackInfoEvent {
+  GetTrackInfoEvent({required this.track});
 
   Track track;
+}
+
+class HandleErrorEvent extends TrackInfoEvent {
+  HandleErrorEvent({required this.error});
+
+  dynamic error;
 }
