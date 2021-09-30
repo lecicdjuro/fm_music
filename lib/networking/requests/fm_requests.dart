@@ -19,32 +19,33 @@ import 'package:fm_music/networking/model/track_details.dart';
 // 26 : Suspended API key - Access for your account has been suspended, please contact Last.fm
 // 29 : Rate limit exceeded - Your IP has made too many requests in a short period
 
-class TrackRequests {
-  final Dio _dio = DioClient().dioInstance;
-
-  Future<List<Track>> performTrackSearch(
-      {required String searchTerm,double page = 1}) async {
+class FMRequests {
+  static Future<List<Track>> performTrackSearch(
+      {required String searchTerm, double page = 1}) async {
     try {
-      Response response = await _dio.get('', queryParameters: {
-        'method': 'track.search',
-        'track': searchTerm,
-        'page': page
-      });
+      Response response = await DioClient().dioInstance.get('',
+          queryParameters: {
+            'method': 'track.search',
+            'track': searchTerm,
+            'page': page
+          });
       final List tracksJSON = response.data['results']['trackmatches']['track'];
       return tracksJSON.map((trackJSON) => Track.fromJson(trackJSON)).toList();
     } on DioError catch (error) {
+      print(error);
       throw APIException("$error");
     }
   }
 
-  Future<TrackDetails> getTrackInfo(
-      {required String artist, required String track}) async {
+  static Future<TrackDetails> getTrackInfo(
+      {required String artist, required String trackName}) async {
     try {
-      Response response = await _dio.get("", queryParameters: {
-        'method': 'track.getinfo',
-        'track': track,
-        'artist': artist
-      });
+      Response response = await DioClient().dioInstance.get('',
+          queryParameters: {
+            'method': 'track.getinfo',
+            'track': trackName,
+            'artist': artist
+          });
       return TrackDetails.fromJson(response.data['track']);
     } on DioError catch (error) {
       throw APIException("$error");

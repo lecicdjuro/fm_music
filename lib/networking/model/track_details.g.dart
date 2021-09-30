@@ -7,8 +7,9 @@ part of 'track_details.dart';
 // **************************************************************************
 
 TrackDetails _$TrackDetailsFromJson(Map<String, dynamic> json) => TrackDetails(
-      id: json['id'] as int,
       url: json['url'] as String,
+      wiki: Wiki.fromJson(json['wiki'] as Map<String, dynamic>),
+      album: Album.fromJson(json['album'] as Map<String, dynamic>),
       listeners: json['listeners'] as String,
       playcount: json['playcount'] as String,
       artist: Artist.fromJson(json['artist'] as Map<String, dynamic>),
@@ -17,10 +18,11 @@ TrackDetails _$TrackDetailsFromJson(Map<String, dynamic> json) => TrackDetails(
 
 Map<String, dynamic> _$TrackDetailsToJson(TrackDetails instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'name': instance.name,
       'url': instance.url,
       'listeners': instance.listeners,
       'playcount': instance.playcount,
       'artist': instance.artist,
+      'wiki': instance.wiki,
+      'album': instance.album,
     };
