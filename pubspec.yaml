@@ -16,7 +16,6 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   cupertino_icons: ^1.0.3
-  intl: ^0.17.0
   dio: ^4.0.0
   json_annotation: ^4.1.0
   cached_network_image: ^3.1.0

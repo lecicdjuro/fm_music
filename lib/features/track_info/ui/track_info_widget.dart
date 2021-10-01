@@ -58,7 +58,7 @@ class TrackInfoWidget extends StatelessWidget {
                                   imageUrl: trackDetails.album!.coverImage,
                                   placeholder: (context, url) => const Icon(
                                       Icons.photo_album_outlined,
-                                      color: FmColors.error),
+                                      color: FmColors.highlightColor),
                                   errorWidget: (context, url, error) =>
                                       const Icon(
                                     Icons.photo_album_outlined,
