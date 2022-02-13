@@ -3,14 +3,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:fm_music/design/fm_colors.dart';
-import 'package:fm_music/features/track_info/bloc/track_info_bloc.dart';
-import 'package:fm_music/features/tracks/bloc/tracks_bloc.dart';
-import 'package:fm_music/features/tracks/ui/search_tracks_page.dart';
+import 'package:fm_music/config/routes/app_routes.dart';
+import 'package:fm_music/config/themes/app_theme.dart';
+import 'package:fm_music/core/utils/strings.dart';
+import 'package:fm_music/injector.dart';
+import 'package:fm_music/presentation/track_info/bloc/track_info_bloc.dart';
 
-void main() {
+import 'presentation/track_list/bloc/tracks_bloc.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await initDependencies();
   runApp(const FmMusic());
 }
 
@@ -22,29 +26,28 @@ class FmMusic extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider<TracksBloc>(
-            create: (BuildContext context) => TracksBloc(),
+            create: (BuildContext context) => injector(),
           ),
           BlocProvider<TrackInfoBloc>(
-            create: (BuildContext context) => TrackInfoBloc(),
-          ),
+            create: (BuildContext context) => injector(),
+          )
         ],
         child: MaterialApp(
-          theme: ThemeData(
-            primaryColor: FmColors.primaryDark,
-          ),
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          debugShowCheckedModeBanner: false,
           supportedLocales: const [
             Locale('en', ''),
             Locale("sr", "RS"),
             Locale("hr", 'HR'),
           ],
-          home: const SearchTracksPage(),
+          debugShowCheckedModeBanner: false,
+          title: kAppTitle,
+          onGenerateRoute: AppRoutes.onGenerateRoutes,
+          theme: AppTheme.light,
         ));
   }
 }

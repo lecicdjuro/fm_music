@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fm_music/features/tracks/ui/keys.dart';
+import 'package:fm_music/injector.dart';
+import 'package:fm_music/presentation/track_list/views/keys.dart';
 
 import 'package:fm_music/main.dart';
 
 void main() {
+  initDependencies();
   testWidgets('Test search page initial state widgets visibility',
       (WidgetTester tester) async {
     await tester.pumpWidget(const FmMusic());

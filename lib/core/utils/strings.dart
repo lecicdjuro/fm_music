@@ -1,0 +1,1 @@
+const String kAppTitle = 'FM Music Search';
